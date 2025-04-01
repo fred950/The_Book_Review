@@ -1,0 +1,30 @@
+<h1><%= @book.title %> by <%= @book.author %></h1>
+<p><strong>ISBN:</strong> <%= @book.isbn %></p>
+
+<%= link_to "Edit", edit_book_path(@book) %> |
+<%= link_to "Back to Books", books_path %>
+
+<h2>Reviews</h2>
+<%= form_with(model: [@book, @review], local: true) do |form| %>
+  <div>
+    <%= form.label :content %>
+    <%= form.text_area :content %>
+  </div>
+
+  <div>
+    <%= form.label :rating %>
+    <%= form.number_field :rating, in: 1..5 %>
+  </div>
+
+  <%= form.submit "Add Review" %>
+<% end %>
+
+<ul>
+  <% @reviews.each do |review| %>
+    <li>
+      <strong>Rating:</strong> <%= review.rating %>
+      <p><%= review.content %></p>
+      <%= link_to "Delete", book_review_path(@book, review), method: :delete, data: { confirm: "Are you sure?" } %>
+    </li>
+  <% end %>
+</ul>
