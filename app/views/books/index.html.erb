@@ -5,6 +5,10 @@
   <% @books.each do |book| %>
     <li>
       <%= link_to book.title, book_path(book) %>
+      <br>
+      <strong>Average Rating:</strong>
+      <%= number_with_precision(book.average_rating, precision: 1) %> 
+      <!-- We calculate the average rating in the model (see below) -->
       <%= link_to "Edit", edit_book_path(book) %> |
       <%= link_to "Delete", book_path(book), method: :delete, data: { confirm: "Are you sure?" } %>
     </li>

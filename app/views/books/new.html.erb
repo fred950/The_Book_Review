@@ -1,6 +1,6 @@
 <h1>Add New Book</h1>
 
-<%= form_with(model: @book, local: true) do |form| %>
+<%= form_with(model: @book, local: true, multipart: true) do |form| %>
   <div>
     <%= form.label :title %>
     <%= form.text_field :title %>
@@ -14,6 +14,11 @@
   <div>
     <%= form.label :isbn %>
     <%= form.text_field :isbn %>
+  </div>
+
+  <div>
+    <%= form.label :cover_image, "Cover Image" %>
+    <%= form.file_field :cover_image %>
   </div>
 
   <%= form.submit "Create Book" %>
