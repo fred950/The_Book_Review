@@ -1,33 +1,27 @@
 class ReviewsController < ApplicationController
   before_action :set_book
 
-  # POST /books/:book_id/reviews
   def create
-    @review = @book.reviews.new(review_params)
+    @review = @book.reviews.build(review_params)
     if @review.save
-      redirect_to @book, notice: "Review successfully created."
+      redirect_to @book, notice: "Review was successfully created."
     else
-      @reviews = @book.reviews
-      render "books/show"
+      redirect_to @book, alert: "Unable to create review."
     end
   end
 
-  # DELETE /books/:book_id/reviews/:id
   def destroy
     @review = @book.reviews.find(params[:id])
     @review.destroy
-    redirect_to @book, notice: "Review successfully deleted."
+    redirect_to @book, notice: "Review was successfully deleted."
   end
 
   private
+    def set_book
+      @book = Book.find(params[:book_id])
+    end
 
-  # Set the book for actions that require a book
-  def set_book
-    @book = Book.find(params[:book_id])
-  end
-
-  # Only allow a list of trusted parameters through
-  def review_params
-    params.require(:review).permit(:content, :rating)
-  end
+    def review_params
+      params.require(:review).permit(:rating, :content)
+    end
 end
